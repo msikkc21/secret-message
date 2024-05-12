@@ -10,15 +10,12 @@ window = tk.Tk()
 window.title("Encryption Application")
 window.configure(bg="white")
 width = 350
-popup_width = 300
 height = 140
-popup_height = 100
 x = int((window.winfo_screenwidth()/2)-(width/2))
-y = int((window.winfo_screenheight()/2)-(height/2))
-popup_x = int((window.winfo_screenwidth()/2)-(popup_width/2))
-popup_y = int((window.winfo_screenheight()/2)-(popup_height/2))
+y = int((window.winfo_screenheight()/2)-(height/2)-100)
 window.geometry(f"{width}x{height}+{x}+{y}")
 window.resizable(False,False)
+
 
 pesan = tk.StringVar()
 
@@ -119,7 +116,11 @@ def decode(input):
 def encodeClick():
     popup = Toplevel(window)
     popup.title("Pesan Rahasia")
-    popup.geometry(f"300x100+{popup_x}+{popup_y}")
+    popup_width = 350
+    popup_height = 100
+    popup_x = int((window.winfo_screenwidth()/2)-(popup_width/2))
+    popup_y = int((window.winfo_screenheight()/2)-(popup_height/2)-260)
+    popup.geometry(f"{popup_width}x{popup_height}+{popup_x}+{popup_y}")
     frame = Frame(popup)
     frame.pack(padx=10, pady=10)
     pesan_enkripsi = Label(frame, text=encode(pesan.get()))
@@ -135,7 +136,11 @@ def encodeClick():
 def decodeClick():
     popup = Toplevel(window)
     popup.title("Pesan Asli")
-    popup.geometry(f"300x100+{popup_x}+{popup_y}")
+    popup_width = 350
+    popup_height = 100
+    popup_x = int((window.winfo_screenwidth()/2)-(popup_width/2))
+    popup_y = int((window.winfo_screenheight()/2)-(popup_height/2)-260)
+    popup.geometry(f"{popup_width}x{popup_height}+{popup_x}+{popup_y}")
     frame = Frame(popup)
     frame.pack(padx=10, pady=10)
     pesan_dekripsi = Label(frame, text=decode(pesan.get()))
