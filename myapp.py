@@ -3,37 +3,14 @@ import numpy as np
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
-from tkinter.messagebox import showinfo
 
-# Create the main window
-window = tk.Tk()
-window.title("Encryption Application")
-window.configure(bg="white")
-width = 350
-height = 140
-x = int((window.winfo_screenwidth()/2)-(width/2))
-y = int((window.winfo_screenheight()/2)-(height/2)-100)
-window.geometry(f"{width}x{height}+{x}+{y}")
-window.resizable(False,False)
-
-
-pesan = tk.StringVar()
-
-# Add widgets or UI elements here
-input_frame = ttk.Frame(window)
-input_frame.pack(padx=10, pady=10, fill = "x")
-
-pesanLabel = ttk.Label(input_frame, text="Masukkan Pesan : ")
-pesanLabel.pack(fill="x", padx=10, pady=5)
-
-pesanInput = ttk.Entry(input_frame, textvariable=pesan)
-pesanInput.pack(fill="x", padx=10, pady=5)
-
+# Menginisialisasi list karakter, matriks encoder, dan matriks decoder
 chars = list(string.ascii_letters + string.digits + string.punctuation + " ") # list karakter
-encoder = np.array([[3,6],[7,9]]) # matriks encoder
+encoder = np.array([[3,9],[7,8]]) # matriks encoder
 decoder = np.linalg.inv(encoder) # matriks decoder (invers dari matriks encoder)
 
-def division(input, x): # untuk membagi pesan menjadi beberapa kelompok yang berisi 4 karakter
+# Membagi pesan menjadi beberapa kelompok 
+def division(input, x): 
     arr = []
     index = 0
     while index < len(input):
@@ -41,7 +18,8 @@ def division(input, x): # untuk membagi pesan menjadi beberapa kelompok yang ber
         index += x
     return arr
 
-def encode(input): # untuk mengenkripsi pesan
+# Fungsi enkripsi pesan asli
+def encode(input):
     # menambahkan karakter jika pesan yang diinput tidak kelipatan 4
     while len(input) % 4 != 0: 
         input += " "
@@ -77,6 +55,7 @@ def encode(input): # untuk mengenkripsi pesan
             chipertext +=  chars[i]    
     return chipertext
 
+# Fungsi dekripsi pesan rahasia
 def decode(input):
     key = [] 
     # mengubah  pesan menjadi kode 
@@ -113,6 +92,7 @@ def decode(input):
             plaintext +=  chars[round(i)]
     return plaintext
 
+# Fungsi menampilkan popup window yang berisi hasil dari fungsi enkripsi
 def encodeClick():
     popup = Toplevel(window)
     popup.title("Pesan Rahasia")
@@ -133,6 +113,7 @@ def encodeClick():
     tombol = Button(frame, text="Copy Text", command=copy_popup_window)
     tombol.pack(padx=10, pady=5)
 
+# Fungsi menampilkan popup window yang berisi hasil dari fungsi dekripsi
 def decodeClick():
     popup = Toplevel(window)
     popup.title("Pesan Asli")
@@ -152,6 +133,31 @@ def decodeClick():
 
     tombol = Button(frame, text="Copy Text", command=copy_popup_window)
     tombol.pack(padx=10, pady=5)
+
+# Membuat window utama
+window = tk.Tk()
+window.title("Encryption Application")
+logo = PhotoImage(file="logo.png")
+window.iconphoto(True, logo)
+window.configure(bg="white")
+width = 350
+height = 140
+x = int((window.winfo_screenwidth()/2)-(width/2))
+y = int((window.winfo_screenheight()/2)-(height/2)-100)
+window.geometry(f"{width}x{height}+{x}+{y}")
+window.resizable(1,0)
+
+# Membuat frame dan widget
+input_frame = ttk.Frame(window)
+input_frame.pack(padx=10, pady=10, fill = "x")
+
+pesanLabel = ttk.Label(input_frame, text="Masukkan Pesan : ")
+pesanLabel.pack(fill="x", padx=10, pady=5)
+
+pesan = tk.StringVar() # Variabel penampung input pesan
+
+pesanInput = ttk.Entry(input_frame, textvariable=pesan)
+pesanInput.pack(fill="x", padx=10, pady=5)
 
 enkripButton = ttk.Button(input_frame,text="Enkripsi", command=encodeClick)
 enkripButton.pack(side="left", pady=10, padx=10)
